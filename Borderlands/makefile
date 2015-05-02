@@ -17,9 +17,12 @@ LIBS=-framework CoreAudio -framework CoreMIDI -framework CoreFoundation \
 	-framework AppKit -lstdc++ -lm -lsndfile
 endif
 
-# this is needed by some oscpack sources
-INC_PATH = -I./
-
+# This is needed by some oscpack sources
+# If you did "brew install libsndfile"
+# /usr/local/include and /lib are default brew prefix
+# Check with "brew --prefix"
+INC_PATH = -I./ -I"/usr/local/include"
+LIB_PATH = -L"/usr/local/lib"
 
 # executable
 TARGET = Borderlands
@@ -48,7 +51,7 @@ OBJ_FILES = \
 
 # Build executable
 ${TARGET} : ${OBJ_FILES}
-	${CXX} -o ${TARGET} ${OBJ_FILES} ${LIBS}
+	${CXX} -o ${TARGET} ${OBJ_FILES} ${LIB_PATH} ${LIBS}
 
 # Build C objects (uses substitution)
 %.o: %.c
